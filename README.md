@@ -87,3 +87,44 @@ https://github.com/IBM/telco-customer-churn-on-icp4d
 
 Open the notebook in Google Colab or Jupyter and select **Run all**. Keep the CSV in the same working folder. If the local CSV is unavailable, the notebook attempts to load the same public dataset from IBM's repository.
 
+Task 4 Final Project
+End-to-End Predictive Analytics: Employee Attrition Prediction
+Objective
+Predict whether an employee is likely to leave the organization using the IBM HR Analytics Employee Attrition & Performance dataset.
+Dataset
+- 1,470 employee records
+- 35 original columns, including demographics, job information, compensation, work experience and the target Attrition
+- Dataset source: https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset
+- Public CSV mirror: https://github.com/mrc03/IBM-HR-Analytics-Employee-Attrition-Performance
+Data preparation
+- Checked missing values, duplicate rows, duplicate employee numbers and target labels.
+- Removed EmployeeNumber because it is an arbitrary identifier.
+- Removed constant-value columns: EmployeeCount, Over18 and StandardHours.
+- Engineered three contextual features: CompanyTenureRatio, PromotionWaitRatio and IncomePerJobLevel.
+- Used median imputation and scaling for numeric variables, and most-frequent imputation plus one-hot encoding for categorical variables.
+- Used a 75/25 stratified train/test split.
+Models
+- Dummy majority-class baseline
+- Logistic Regression with balanced class weights
+- Random Forest with balanced class weights
+Evaluation
+The notebook compares accuracy, precision, recall, F1-score, ROC-AUC and average precision. It also includes confusion matrices, ROC curves, precision-recall curves, five-fold cross-validation and Random Forest feature importance.
+Verified model comparison
+Model	Accuracy	Precision	Recall	F1-score	ROC-AUC	Average Precision
+Dummy baseline	84.0%	0.0%	0.0%	0.0%	50.0%	16.0%
+Logistic Regression	78.5%	39.4%	62.7%	48.4%	81.6%	56.0%
+Random Forest	83.7%	48.0%	20.3%	28.6%	77.5%	44.1%
+
+
+Selected model: Logistic Regression. Although Random Forest produced higher overall accuracy, Logistic Regression found far more employees who actually left and achieved the stronger F1-score, ROC-AUC and average precision. It is therefore the better model for a supportive HR early-warning workflow.
+Main findings
+- Attrition is the minority class, so accuracy alone is inadequate.
+- Overtime and frequent business travel show higher observed attrition rates.
+- Attrition patterns differ by job role and monthly-income distribution.
+- Engineered career-context features provide additional useful inputs.
+- The final model is selected using test metrics, cross-validation, false-negative risk and the intended supportive retention use case.
+Ethical use
+This is a learning project. A real attrition model must not make employment decisions automatically. It requires fairness testing, privacy protection, employee-support safeguards and human review.
+Files
+- Inovegen_Task4_Employee_Attrition_Final_Project.ipynb
+- IBM_HR_Employee_Attrition.csv
